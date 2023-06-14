@@ -1,0 +1,25 @@
+<p>travel-table works!</p>
+<table>
+    <thead>
+      <tr>
+        <th>Flag</th>
+        <th>Country</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Notes</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Iterate over the travel items and generate table rows -->
+      <tr *ngFor="let travel of travels">
+        <td><img [src]="travel.flagUrl" alt="Flag" width="32" height="32"></td>
+        <td>{{ travel.country }}</td>
+        <td>{{ travel.startDate | date }}</td>
+        <td>{{ travel.endDate | date }}</td>
+        <td>{{ travel.notes }}</td>
+        <td><button (click)="deleteTravel(travel)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+  

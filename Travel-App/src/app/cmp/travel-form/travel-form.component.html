@@ -1,0 +1,19 @@
+<section>
+
+    <form (ngSubmit)="submitForm()">
+        <label for="country">Country</label>
+    <input type="text" id="country" name="country" [(ngModel)]="country" />
+  
+    <label for="startDate">Start Date</label>
+    <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" />
+  
+    <label for="endDate">End Date</label>
+    <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" />
+  
+    <label for="notes">Notes</label>
+    <textarea id="notes" name="notes" [(ngModel)]="notes"></textarea>
+  
+    <button type="submit">Submit</button>
+  </form>
+  
+    </section>
