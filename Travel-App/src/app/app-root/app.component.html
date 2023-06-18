@@ -1,14 +1,15 @@
 <section class="main-app">
   <header class="container">
    
-      
+    <div class="nav" [routerLink]="['TravelForm']">form</div>
+    <div class="nav" [routerLink]="['TravelTable']">table</div>
   </header>
 
  
   <main class="container">
     
-<app-travel-form></app-travel-form>
-<!-- <app-traveling-table></app-traveling-table> -->
+<!-- <app-travel-form></app-travel-form>
+<app-traveling-table></app-traveling-table> -->
       <router-outlet></router-outlet>
 
   </main>
