@@ -1,23 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { travelService } from '../../services/travel.service';
 
 @Component({
   selector: 'app-traveling-table',
   templateUrl: './travel-table.component.html',
   styleUrls: ['./travel-table.component.scss']
 })
-export class TravelTableComponent {
-  travels: any[] = [
-    // Sample data, replace with your actual travel data
-    { flagUrl: 'https://example.com/flag1.png', country: 'Country 1', startDate: new Date(), endDate: new Date(), notes: 'Notes 1' },
-    { flagUrl: 'https://example.com/flag2.png', country: 'Country 2', startDate: new Date(), endDate: new Date(), notes: 'Notes 2' },
-    // Add more travel items as needed
-  ];
+export class TravelTableComponent implements OnInit {
+  travels: any[] = [];
+
+  ngOnInit() {
+    this.loadTravels();
+  }
+
+  loadTravels() {
+    try {
+      travelService.getTravels(null)
+        .then((travels) => {
+          this.travels = travels;
+        })
+        .catch((error) => {
+          console.error('Failed to load travels:', error);
+          // Handle the error if needed
+        });
+    } catch (error) {
+      console.error('Failed to load travels:', error);
+      // Handle the error if needed
+    }
+  }
 
   deleteTravel(travel: any) {
-    // Implement delete logic here, e.g., remove the travel item from the 'travels' array
-    const index = this.travels.indexOf(travel);
-    if (index !== -1) {
-      this.travels.splice(index, 1);
+    try {
+      travelService.deleteTravel(travel._id)
+        .then(() => {
+          const index = this.travels.findIndex((t) => t._id === travel._id);
+          if (index !== -1) {
+            this.travels.splice(index, 1);
+          }
+        })
+        .catch((error) => {
+          console.error('Failed to delete travel:', error);
+          // Handle the error if needed
+        });
+    } catch (error) {
+      console.error('Failed to delete travel:', error);
+      // Handle the error if needed
     }
   }
 }

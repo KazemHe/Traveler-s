@@ -1,4 +1,3 @@
-<p>travel-table works!</p>
 <table>
     <thead>
       <tr>
@@ -7,18 +6,19 @@
         <th>Start Date</th>
         <th>End Date</th>
         <th>Notes</th>
-        <th>Action</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <!-- Iterate over the travel items and generate table rows -->
       <tr *ngFor="let travel of travels">
-        <td><img [src]="travel.flagUrl" alt="Flag" width="32" height="32"></td>
+        <td><img [src]="travel.flagUrl" alt="Flag"></td>
         <td>{{ travel.country }}</td>
-        <td>{{ travel.startDate | date }}</td>
-        <td>{{ travel.endDate | date }}</td>
-        <td>{{ travel.notes }}</td>
-        <td><button (click)="deleteTravel(travel)">Delete</button></td>
+        <td>{{ travel.start }}</td>
+        <td>{{ travel.end }}</td>
+        <td>{{ travel.note }}</td>
+        <td>
+          <button (click)="deleteTravel(travel)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

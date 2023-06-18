@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from '../app/app-root/app.component';
 import { TravelFormComponent } from './cmp/travel-form/travel-form.component';
 import { TravelTableComponent } from './cmp/travel-table/travel-table.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -16,7 +23,12 @@ import { TravelTableComponent } from './cmp/travel-table/travel-table.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule // Add FormsModule here
+    FormsModule ,// Add FormsModule here
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule ,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

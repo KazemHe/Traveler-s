@@ -1,36 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Travel, travelService } from '../../services/travel.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+interface Country {
+  name: string;
+}
 
 @Component({
   selector: 'app-travel-form',
   templateUrl: './travel-form.component.html',
-  styleUrls: ['./travel-form.component.scss']
+  styleUrls: ['./travel-form.component.scss'],
+  animations: [
+    {
+      name: '@panelAnimation',
+      definitions: [
+        {
+          type: 'style',
+          fromStyles: { opacity: 0 },
+          toStyles: { opacity: 1 },
+          duration: 500,
+        },
+      ],
+    },
+  ],
 })
-export class TravelFormComponent {
-  country: string | any ;
+export class TravelFormComponent implements OnInit {
+  country: string = '';
   countryControl = new FormControl();
-  startDate: Date = new Date();
-  endDate: Date = new Date();
+  startDate: string = '';
+  endDate: string = '';
   notes: string = '';
-  
+  countries: Country[] = [];
 
-  countries: string[] = [
-    'Country 1',
-    'Country 2',
-    'Country 3',
-    // Add more country options as needed
-  ];
+  constructor(private http: HttpClient) {}
 
-  submitForm() {
-    const travelInfo = {
-      country: this.countryControl.value,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      notes: this.notes
+  searchCountries() {
+    const inputValue = this.countryControl.value;
+
+    if (inputValue && inputValue.length > 2) {
+      this.getCountries(inputValue).subscribe((countries) => {
+        this.countries = countries;
+      });
+    }
+  }
+
+  getCountries(searchTerm: string): Observable<Country[]> {
+    return this.http
+      .get<any[]>(`https://restcountries.com/v3/name/${searchTerm}`)
+      .pipe(map((response) => response.map((country) => ({ name: country.name.common }))));
+  }
+
+  async submitForm() {
+    const travelInfo: Travel = {
+      _id: '', // Assign an appropriate ID here
+      country: this.country,
+      start: this.startDate.toString(),
+      end: this.endDate.toString(),
+      note: this.notes,
     };
 
-    // Add logic to handle form submission
-    // e.g., push the travel information to the Traveling Table
-    console.log(travelInfo);
+    try {
+      const savedTravel = await travelService.saveTravel(travelInfo);
+      console.log('Travel saved:', savedTravel);
+      // Add any additional logic after saving the travel
+    } catch (error) {
+      console.error('Failed to save travel:', error);
+      // Handle the error if needed
+    }
+  }
+
+  ngOnInit() {
+    this.searchCountries();
   }
 }

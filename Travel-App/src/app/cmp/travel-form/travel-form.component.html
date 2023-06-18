@@ -1,19 +1,23 @@
 <section>
-
     <form (ngSubmit)="submitForm()">
-        <label for="country">Country</label>
-    <input type="text" id="country" name="country" [(ngModel)]="country" />
+      <label for="country">Country</label>
+      <input type="text" [formControl]="countryControl" (input)="searchCountries()">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let country of countries" [value]="country">
+          {{ country }}
+        </mat-option>
+      </mat-autocomplete>
   
-    <label for="startDate">Start Date</label>
-    <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" />
+      <label for="startDate">Start Date</label>
+      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
   
-    <label for="endDate">End Date</label>
-    <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" />
+      <label for="endDate">End Date</label>
+      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
   
-    <label for="notes">Notes</label>
-    <textarea id="notes" name="notes" [(ngModel)]="notes"></textarea>
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes" [(ngModel)]="notes"></textarea>
   
-    <button type="submit">Submit</button>
-  </form>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
   
-    </section>
