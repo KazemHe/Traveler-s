@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { travelService } from '../../services/travel.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { travelService, Travel } from '../../services/travel.service';
+import { MatSort, MatSortable } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-traveling-table',
@@ -7,44 +9,44 @@ import { travelService } from '../../services/travel.service';
   styleUrls: ['./travel-table.component.scss']
 })
 export class TravelTableComponent implements OnInit {
-  travels: any[] = [];
+  travels: Travel[] = [];
+  displayedColumns: string[] = ['flag', 'country', 'start', 'end', 'note', 'actions'];
+  dataSource: MatTableDataSource<Travel> = new MatTableDataSource<Travel>();
+
+  @ViewChild(MatSort) sort: MatSort | undefined;
 
   ngOnInit() {
     this.loadTravels();
   }
 
-  loadTravels() {
+  async loadTravels() {
     try {
-      travelService.getTravels(null)
-        .then((travels) => {
-          this.travels = travels;
-        })
-        .catch((error) => {
-          console.error('Failed to load travels:', error);
-          // Handle the error if needed
-        });
+      const travels = await travelService.getTravels(null);
+      this.travels = travels;
+      this.dataSource.data = this.travels;
+      if (this.sort) {
+        this.dataSource.sort = this.sort;
+      }
     } catch (error) {
       console.error('Failed to load travels:', error);
       // Handle the error if needed
     }
   }
 
-  deleteTravel(travel: any) {
+  async deleteTravel(id: string) {
     try {
-      travelService.deleteTravel(travel._id)
-        .then(() => {
-          const index = this.travels.findIndex((t) => t._id === travel._id);
-          if (index !== -1) {
-            this.travels.splice(index, 1);
-          }
-        })
-        .catch((error) => {
-          console.error('Failed to delete travel:', error);
-          // Handle the error if needed
-        });
+      await travelService.deleteTravel(id);
+      // Refresh the table after successful deletion
+      this.loadTravels();
     } catch (error) {
       console.error('Failed to delete travel:', error);
       // Handle the error if needed
+    }
+  }
+  
+  sortData(column: string) {
+    if (this.sort) {
+      this.sort.sort(({ id: column, start: 'asc' }) as MatSortable);
     }
   }
 }

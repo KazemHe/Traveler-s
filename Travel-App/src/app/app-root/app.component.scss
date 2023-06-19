@@ -1,0 +1,54 @@
+.main-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+  }
+  
+  .nav {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #ddd;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav:hover {
+    background-color: #bbb;
+  }
+  
+  .main-app .container:first-child {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  main {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #f2f2f2;
+  }
+  
+  p {
+    margin: 0;
+  }
+  
+  /* Additional styles for the router links */
+  .nav[routerLink='TravelForm'] {
+    color: #333;
+  }
+  
+  .nav[routerLink='TravelTable'] {
+    color: #333;
+  }
+  

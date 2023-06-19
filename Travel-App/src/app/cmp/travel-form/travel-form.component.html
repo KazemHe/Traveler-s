@@ -1,10 +1,10 @@
 <section>
     <form (ngSubmit)="submitForm()">
       <label for="country">Country</label>
-      <input type="text" [formControl]="countryControl" (input)="searchCountries()">
+      <input type="text" [formControl]="countryControl" (input)="searchCountries()" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let country of countries" [value]="country">
-          {{ country }}
+        <mat-option *ngFor="let country of countries" [value]="country.name">
+          {{ country.name }}
         </mat-option>
       </mat-autocomplete>
   

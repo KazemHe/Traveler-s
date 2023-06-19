@@ -1,25 +1,37 @@
-<table>
-    <thead>
-      <tr>
-        <th>Flag</th>
-        <th>Country</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Notes</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let travel of travels">
-        <td><img [src]="travel.flagUrl" alt="Flag"></td>
-        <td>{{ travel.country }}</td>
-        <td>{{ travel.start }}</td>
-        <td>{{ travel.end }}</td>
-        <td>{{ travel.note }}</td>
-        <td>
-          <button (click)="deleteTravel(travel)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
+<table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="flag">
+      <th mat-header-cell *matHeaderCellDef>Flag</th>
+      <td mat-cell *matCellDef="let travel"><img [src]="travel.flagUrl" alt="Flag"></td>
+    </ng-container>
+  
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="country">Country</th>
+      <td mat-cell *matCellDef="let travel">{{ travel.country }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="start">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="start">Start Date</th>
+      <td mat-cell *matCellDef="let travel">{{ travel.start }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="end">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="end">End Date</th>
+      <td mat-cell *matCellDef="let travel">{{ travel.end }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="note">Notes</th>
+      <td mat-cell *matCellDef="let travel">{{ travel.note }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let travel">
+        <button (click)="deleteTravel(travel._id)">Delete</button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   
