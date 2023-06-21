@@ -26,15 +26,15 @@ export class TravelFormComponent implements OnInit {
 
   searchCountries() {
     const inputValue = this.countryControl.value;
-
+  
     if (inputValue && inputValue.length > 2) {
       this.travelService.getCountries(inputValue).subscribe((countries: Country[]) => {
-        this.countries = countries.map((country: any) => country.name.common);
+        this.countries = countries;
         console.log(countries);
       });
-      
     }
   }
+  
 
   async submitForm() {
     const travelInfo: Travel = {
@@ -44,18 +44,19 @@ export class TravelFormComponent implements OnInit {
       end: this.endDate.toString(),
       note: this.notes,
     };
-
+  
     try {
       const savedTravel = await travelService.saveTravel(travelInfo);
       console.log('Travel saved:', savedTravel);
       this.router.navigate(['/TravelTable']);
-
+  
       // Add any additional logic after saving the travel
     } catch (error) {
       console.error('Failed to save travel:', error);
       // Handle the error if needed
     }
   }
+  
 
   ngOnInit() {
     this.searchCountries();

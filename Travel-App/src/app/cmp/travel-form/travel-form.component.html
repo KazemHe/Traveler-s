@@ -4,7 +4,7 @@
       <input type="text" [formControl]="countryControl" (input)="searchCountries()" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let country of countries" [value]="country">
-          {{ country }}
+          {{ country.name }}
         </mat-option>
       </mat-autocomplete>
   
