@@ -1,5 +1,11 @@
 import { storageService } from './storage.service';
 import { Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+
+
 
 
 export const travelService = {
@@ -18,7 +24,17 @@ export  interface Travel {
   start: string;
   end: string;
   note: string;
+  flag?: string;
 }
+
+
+export interface Country {
+    name: string;
+    flags: { svg: string };
+  }
+  
+
+  
 
 const travels: Travel[] = storageService.load('travel') || [];
 
@@ -40,9 +56,23 @@ function sort(arr: Travel[]): Travel[] {
       return 0;
     });
   }
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class TravelService {
+    constructor(public http: HttpClient) {}
   
-  
-  
+    getCountries(searchTerm: string): Observable<Country[]> {
+        return this.http
+          .get<any[]>(`https://restcountries.com/v3/name/${searchTerm}`)
+          .pipe(
+            map((response) =>
+              response.map((country) => ({ name: country.name, flags: country.flags }))
+            )
+          );
+      }
+      
+  }
 
 function getTravels(filterBy: { term?: string } | null): Promise<Travel[]> {
   return new Promise((resolve, reject) => {
@@ -128,5 +158,4 @@ function makeId(length = 5): string {
   }
   return txt;
 }
-
 

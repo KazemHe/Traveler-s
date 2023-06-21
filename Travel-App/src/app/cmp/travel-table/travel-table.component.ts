@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { travelService, Travel } from '../../services/travel.service';
+import { TravelService, travelService, Travel, Country } from '../../services/travel.service';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-traveling-table',
@@ -15,9 +16,14 @@ export class TravelTableComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 
+  constructor(private travelService: TravelService, private http: HttpClient) {}
+
   ngOnInit() {
     this.loadTravels();
+    this.loadFlags();
   }
+  
+  flagBaseURL = 'https://restcountries.com/v3.1/flags';
 
   async loadTravels() {
     try {
@@ -29,7 +35,19 @@ export class TravelTableComponent implements OnInit {
       }
     } catch (error) {
       console.error('Failed to load travels:', error);
-      // Handle the error if needed
+    }
+  }
+
+  async loadFlags() {
+    for (const travel of this.travels) {
+      try {
+        const countries: Country[] = await this.travelService.getCountries(travel.country).toPromise() || [];
+        if (countries && countries.length > 0) {
+          travel.flag = `${this.flagBaseURL}/${countries[0].flags.svg}`;
+        }
+      } catch (error) {
+        console.error('Failed to load flags:', error);
+      }
     }
   }
 
