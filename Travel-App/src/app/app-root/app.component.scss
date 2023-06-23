@@ -1,54 +1,39 @@
 .main-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  header.container {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: space-around;
+    justify-content:  space-around;
     align-items: center;
-    padding: 20px;
-    background-color: #f2f2f2;
+    padding: 1rem;
+    background-color: #007bff;
+    color: #fff;
+
+    .nav {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
   }
-  
-  .nav {
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #ddd;
-    transition: background-color 0.3s ease;
-  }
-  
-  .nav:hover {
-    background-color: #bbb;
-  }
-  
-  .main-app .container:first-child {
-    border-bottom: 1px solid #ccc;
-  }
-  
-  main {
+
+  main.main {
     flex: 1;
-    padding: 20px;
+    padding: 2rem;
   }
-  
-  footer {
-    padding: 20px;
-    text-align: center;
-    background-color: #f2f2f2;
-  }
-  
-  p {
-    margin: 0;
-  }
-  
-  /* Additional styles for the router links */
-  .nav[routerLink='TravelForm'] {
+
+  footer.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f8f8;
     color: #333;
   }
-  
-  .nav[routerLink='TravelTable'] {
-    color: #333;
-  }
-  
+}

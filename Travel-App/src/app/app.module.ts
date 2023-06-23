@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+
 
 
 
@@ -32,7 +34,8 @@ import { MatSortModule } from '@angular/material/sort';
     BrowserAnimationsModule,
     NoopAnimationsModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    AutocompleteLibModule
 
   ],
   providers: [],

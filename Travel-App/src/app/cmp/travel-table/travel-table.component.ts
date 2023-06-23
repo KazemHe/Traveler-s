@@ -39,11 +39,9 @@ export class TravelTableComponent implements OnInit {
   async deleteTravel(id: string) {
     try {
       await travelService.deleteTravel(id);
-      // Refresh the table after successful deletion
       this.loadTravels();
     } catch (error) {
       console.error('Failed to delete travel:', error);
-      // Handle the error if needed
     }
   }
 
