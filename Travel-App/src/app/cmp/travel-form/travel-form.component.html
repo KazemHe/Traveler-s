@@ -3,7 +3,7 @@
       <label for="country">Country</label>
       <input type="text" [formControl]="countryControl" (input)="searchCountries()" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let country of countries" [value]="country"> <!-- Update the binding here -->
+        <mat-option *ngFor="let country of countries" [value]="country.name"> <!-- Update the binding here -->
           {{ country.name }}
         </mat-option>
       </mat-autocomplete>

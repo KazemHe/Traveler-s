@@ -35,6 +35,7 @@ export class TravelTableComponent implements OnInit {
       console.error('Failed to load travels:', error);
     }
   }
+  
 
   async deleteTravel(id: string) {
     try {

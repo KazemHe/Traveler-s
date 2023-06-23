@@ -18,6 +18,7 @@ export class TravelFormComponent implements OnInit {
   endDate: string = '';
   notes: string = '';
   countries: Country[] = [];
+  flag :string = ''
 
   constructor(
     private travelService: TravelService,
@@ -37,25 +38,33 @@ export class TravelFormComponent implements OnInit {
   
 
   async submitForm() {
-    const travelInfo: Travel = {
-      _id: '', // Assign an appropriate ID here
-      country: this.countryControl.value, // Use the value from the form control instead of the separate country variable
-      start: this.startDate.toString(),
-      end: this.endDate.toString(),
-      note: this.notes,
-    };
+    const selectedCountry: Country | undefined = this.countries.find(
+      (country) => country.name === this.countryControl.value
+    );
   
-    try {
-      const savedTravel = await travelService.saveTravel(travelInfo);
-      console.log('Travel saved:', savedTravel);
-      this.router.navigate(['/TravelTable']);
+    if (selectedCountry) {
+      const travelInfo: Travel = {
+        _id: '', // Assign an appropriate ID here
+        country: selectedCountry.name,
+        start: this.startDate.toString(),
+        end: this.endDate.toString(),
+        note: this.notes,
+        flag: selectedCountry.flags.svg, // Assign the flag path
+      };
   
-      // Add any additional logic after saving the travel
-    } catch (error) {
-      console.error('Failed to save travel:', error);
-      // Handle the error if needed
+      try {
+        const savedTravel = await travelService.saveTravel(travelInfo);
+        console.log('Travel saved:', savedTravel);
+        this.router.navigate(['/TravelTable']);
+  
+        // Add any additional logic after saving the travel
+      } catch (error) {
+        console.error('Failed to save travel:', error);
+        // Handle the error if needed
+      }
     }
   }
+  
   
 
   ngOnInit() {

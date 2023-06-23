@@ -139,6 +139,7 @@ function getEmptyTravel(): Travel {
         start: '',
         end: '',
         note: '',
+        flag:''
     };
 }
 
