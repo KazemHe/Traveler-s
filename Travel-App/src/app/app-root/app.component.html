@@ -1,19 +1,18 @@
 <section class="main-app">
   <header class="container">
-   
-    <div class="nav" [routerLink]="['TravelForm']">form</div>
-    <div class="nav" [routerLink]="['TravelTable']">table</div>
+    <div class="brand">Travel App</div>
+    
+
+      <div class="nav" [routerLink]="['/TravelForm']">Form</div>
+      <div class="nav" [routerLink]="['/TravelTable']">Table</div>
+
   </header>
 
- 
   <main class="main">
-
-      <router-outlet></router-outlet>
-
+    <router-outlet></router-outlet>
   </main>
 
   <footer class="container">
-      <p>ContactsRights &copy;</p>
+    <p>ContactsRights &copy;</p>
   </footer>
-
 </section>

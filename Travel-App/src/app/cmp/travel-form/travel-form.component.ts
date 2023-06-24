@@ -28,7 +28,7 @@ export class TravelFormComponent implements OnInit {
   searchCountries() {
     const inputValue = this.countryControl.value;
   
-    if (inputValue && inputValue.length > 2) {
+    if (inputValue && inputValue.length > 1) {
       this.travelService.getCountries(inputValue).subscribe((countries: Country[]) => {
         this.countries = countries;
         console.log(countries);
